@@ -20,6 +20,28 @@ You’ll simulate database-like behavior with in-memory Python class objects and
 
 This lab reinforces essential backend development skills including route design, data mutation, error handling, and RESTful conventions.
 
+## API Routes
+
+The API exposes these endpoints:
+
+- GET / returns a welcome message in JSON.
+- GET /events returns a JSON array of current events.
+- POST /events creates a new event from a JSON body containing a title.
+- PATCH /events/<id> updates the title of an existing event.
+- DELETE /events/<id> removes an event.
+
+Example request:
+
+```bash
+curl -X POST http://localhost:5000/events -H "Content-Type: application/json" -d '{"title":"Hackathon"}'
+```
+
+Example response:
+
+```json
+{"id": 3, "title": "Hackathon"}
+```
+
 ## Setup Instructions
 
 ### Fork and Clone the Repository
