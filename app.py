@@ -51,7 +51,8 @@ def create_event():
     if not isinstance(title, str) or not title.strip():
         return jsonify({"error": "Title is required"}), 400
 
-    new_event = Event(len(events) + 1, title.strip())
+    next_id = max((event.id for event in events), default=0) + 1
+    new_event = Event(next_id, title.strip())
     events.append(new_event)
     return jsonify(new_event.to_dict()), 201
 

@@ -30,17 +30,37 @@ The API exposes these endpoints:
 - PATCH /events/<id> updates the title of an existing event.
 - DELETE /events/<id> removes an event.
 
-Example request:
+Create an event:
 
 ```bash
 curl -X POST http://localhost:5000/events -H "Content-Type: application/json" -d '{"title":"Hackathon"}'
 ```
 
-Example response:
+Response (`201 Created`):
 
 ```json
 {"id": 3, "title": "Hackathon"}
 ```
+
+Update an event title:
+
+```bash
+curl -X PATCH http://localhost:5000/events/1 -H "Content-Type: application/json" -d '{"title":"Hackathon 2025"}'
+```
+
+Response (`200 OK`):
+
+```json
+{"id": 1, "title": "Hackathon 2025"}
+```
+
+Delete an event:
+
+```bash
+curl -X DELETE http://localhost:5000/events/2
+```
+
+Response: `204 No Content`. Requests for an event ID that does not exist receive a `404 Not Found` JSON response.
 
 ## Setup Instructions
 
@@ -57,23 +77,24 @@ cd course-8-module-5-flask-full-crud-api-lab
 
 ### Install Dependencies
 
-Ensure Python is installed:
+Ensure Python 3 is installed (the major version configured in `Pipfile`):
 
 ```bash
-python --version
+python3 --version
 ```
 
-Install Flask and dependencies using pipenv:
+Install the project dependencies with pipenv using Python 3:
 
 ```bash
-pipenv install
-pipenv shell
+pipenv install --python 3
+pipenv run python app.py
 ```
 
 Or with pip:
 
 ```bash
-pip install flask
+python3 -m pip install flask
+python3 app.py
 ```
 
 ## Tasks
@@ -137,10 +158,10 @@ if __name__ == "__main__":
 
 ### Task 4: Test the API
 
-Start the Flask development server:
+Start the Flask development server with Python 3:
 
 ```bash
-python app.py
+python3 app.py
 ```
 
 Test your endpoints using Postman or curl:

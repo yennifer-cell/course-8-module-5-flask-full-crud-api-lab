@@ -15,6 +15,35 @@ def test_create_event():
     data = response.get_json()
     assert "id" in data and data["title"] == "Hackathon"
 
+
+def test_create_event_uses_unique_id_after_delete():
+    client = app.test_client()
+    client.delete("/events/1")
+
+    response = client.post("/events", json={"title": "Hackathon"})
+
+    assert response.status_code == 201
+    assert response.get_json() == {"id": 3, "title": "Hackathon"}
+
+
+def test_create_event_requires_non_empty_title():
+    client = app.test_client()
+
+    response = client.post("/events", json={"title": "  "})
+
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "Title is required"}
+
+
+def test_create_event_rejects_invalid_json():
+    client = app.test_client()
+
+    response = client.post("/events", data="{", content_type="application/json")
+
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "Invalid JSON payload"}
+
+
 def test_update_event():
     client = app.test_client()
     response = client.patch("/events/1", json={"title": "Hackathon 2025"})
